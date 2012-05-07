@@ -1,15 +1,9 @@
-from Acquisition import aq_inner
 from OFS.interfaces import IItem
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from five import grok
 from plone.app.layout.viewlets.interfaces import IPortalHeader
-from plone.app.viewletmanager.manager import OrderedViewletManager
-from plone.registry.interfaces import IRegistry
-from santa.templates import _
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 
 
 grok.templatedir('viewlets')
@@ -23,6 +17,15 @@ class HeadTitleViewlet(grok.Viewlet):
     grok.template('head-title')
     grok.viewletmanager(IPortalHeader)
 
-    def update(self):
+    def head(self):
         catalog = getToolByName(self.context, 'portal_catalog')
-        
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        head = portal_state.portal().get('head')
+        if head:
+            query = {
+                'path': {
+                    'query': '/'.join(head.getPhysicalPath()),
+                    'depth': 1
+                }
+            }
+            return catalog(query)[0]

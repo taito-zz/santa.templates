@@ -1,1 +1,8 @@
-AAA
+<section
+  id="head-title"
+  tal:condition="viewlet/head"
+  tal:define="item viewlet/head"
+  >
+  <h1 tal:content="item/Title" />
+  <h2 tal:content="item/Description" />
+</section>

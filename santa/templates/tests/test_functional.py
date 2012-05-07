@@ -40,6 +40,25 @@ def setUp(self):
 
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
+    ## Set title and description of head
+    head = portal[
+        portal.invokeFactory(
+            'Folder',
+            'head',
+            language='',
+        )
+    ]
+    head.reindexObject()
+    en = head[
+        head.invokeFactory(
+            'Folder',
+            'en',
+            title='Santa Claus Foundation',
+            description='Save the world for kids',
+        )
+    ]
+    en.reindexObject()
+
     transaction.commit()
 
 
