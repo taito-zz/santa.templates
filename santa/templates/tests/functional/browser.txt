@@ -5,4 +5,3 @@ Log in as the portal owner::
 
 Continue your test::
 
-    >>> browser.openBrowser()
