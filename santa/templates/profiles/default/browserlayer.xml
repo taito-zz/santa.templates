@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+      name="santa.templates"
+      interface="santa.templates.browser.interfaces.ISantaTemplatesLayer"
+      />
+</layers>
