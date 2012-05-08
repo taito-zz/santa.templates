@@ -29,6 +29,7 @@ setup(
         'hexagonit.testing',
         'plone.app.contentlisting',
         'plone.browserlayer',
+        'santa.content',
         'setuptools',
         'zope.i18nmessageid',
     ],

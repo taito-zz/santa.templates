@@ -12,6 +12,10 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('santa.templates'))
 
+    def test_is_santa_content_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('santa.content'))
+
     def test_browserlayer(self):
         from santa.templates.browser.interfaces import ISantaTemplatesLayer
         from plone.browserlayer import utils
