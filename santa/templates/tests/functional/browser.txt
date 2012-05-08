@@ -3,5 +3,11 @@ Log in as the portal owner::
     >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
-Continue your test::
+Go to santa-view::
 
+    >>> browser.open('/santa-view')
+
+    >>> 'Text of SCF.' in browser.contents
+    True
+    >>> 'English Enquiry' in browser.contents
+    True

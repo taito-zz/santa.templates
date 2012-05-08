@@ -1,11 +1,13 @@
-from Products.Five.browser import BrowserView
-#from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from five import grok
+from santa.templates.browser.interfaces import ISantaTemplatesLayer
+from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+
+grok.templatedir('templates')
 
 
-class DemoView(BrowserView):
+class TopView(grok.View):
+    grok.context(IPloneSiteRoot)
+    grok.layer(ISantaTemplatesLayer)
+    grok.name('santa-view')
+    grok.template('top-view')
 
-#    index = ViewPageTemplateFile('templates/demo.pt')
-
-    def __call__(self):
-        pass
-#        return self.index()

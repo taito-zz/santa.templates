@@ -21,6 +21,24 @@ class TestCase(IntegrationTestCase):
         from plone.browserlayer import utils
         self.failUnless(ISantaTemplatesLayer in utils.registered_layers())
 
+    def test_types__Plone_Site__immediate_view(self):
+        portal_types = getToolByName(self.portal, 'portal_types')
+        type_info = portal_types.getTypeInfo('Plone Site')
+        self.assertEqual(type_info.getProperty('immediate_view'), 'santa-view')
+
+    def test_types__Plone_Site__default_view(self):
+        portal_types = getToolByName(self.portal, 'portal_types')
+        type_info = portal_types.getTypeInfo('Plone Site')
+        self.assertEqual(type_info.getProperty('default_view'), 'santa-view')
+
+    def test_types__Plone_Site__view_methods(self):
+        portal_types = getToolByName(self.portal, 'portal_types')
+        type_info = portal_types.getTypeInfo('Plone Site')
+        self.assertEqual(type_info.getProperty('view_methods'), ('santa-view',))
+
+    def test_portal__layout(self):
+        self.assertEqual(self.portal.getLayout(), 'santa-view')
+
     def test_uninstall__package(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['santa.templates'])

@@ -1,0 +1,33 @@
+<section
+  i18n:domain="santa.templates"
+  id="santa-about"
+  tal:condition="viewlet/item"
+  tal:define="item viewlet/item"
+  >
+  <div tal:replace="structure item/text" />
+  <ul>
+    <li
+      tal:repeat="link viewlet/inquiries"
+      >
+      <a
+        tal:attributes="
+          href link/getURL;
+          title link/Title;
+          alt link/Description;
+        "
+        tal:content="link/Title"
+        />
+    </li>
+    <li>
+      <a
+        tal:attributes="
+          href item/url;
+          title item/title;
+          alt item/description;
+        "
+        >
+        Read More
+      </a>
+    </li>
+  </ul>
+</section>

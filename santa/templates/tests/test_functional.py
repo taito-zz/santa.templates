@@ -40,21 +40,40 @@ def setUp(self):
 
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
-    ## Set title and description of head
-    head = portal[
+    ## Set title and description of foundation
+    foundation = portal[
         portal.invokeFactory(
             'Folder',
-            'head',
+            'foundation',
             language='',
         )
     ]
-    head.reindexObject()
-    en = head[
-        head.invokeFactory(
-            'Folder',
+    foundation.reindexObject()
+    en = foundation[
+        foundation.invokeFactory(
+            'Document',
             'en',
             title='Santa Claus Foundation',
             description='Save the world for kids',
+            text='<p>Text of SCF.</p>',
+        )
+    ]
+    en.reindexObject()
+
+    inquiries = portal[
+        portal.invokeFactory(
+            'Folder',
+            'inquiries',
+            language='',
+        )
+    ]
+    inquiries.reindexObject()
+    en = inquiries[
+        inquiries.invokeFactory(
+            'Document',
+            'en',
+            title='English Enquiry',
+            description='Description of English Enquiry',
         )
     ]
     en.reindexObject()

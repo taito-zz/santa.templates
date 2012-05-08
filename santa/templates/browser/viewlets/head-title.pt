@@ -3,6 +3,11 @@
   tal:condition="viewlet/head"
   tal:define="item viewlet/head"
   >
-  <h1 tal:content="item/Title" />
-  <h2 tal:content="item/Description" />
+  <h1>
+    <a
+      tal:attributes="href item/portal_url"
+      tal:content="item/title"
+      />
+    </h1>
+  <h2 tal:content="item/description" />
 </section>
