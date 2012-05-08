@@ -1,17 +1,12 @@
 from OFS.interfaces import IItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from five import grok
 from plone.app.layout.viewlets.interfaces import IPortalHeader
 from plone.app.viewletmanager.manager import OrderedViewletManager
-from plone.registry.interfaces import IRegistry
-from plone.z3cform.layout import FormWrapper
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from plone.app.contentlisting.interfaces import IContentListing
-
 
 
 grok.templatedir('viewlets')

@@ -10,4 +10,3 @@ class TopView(grok.View):
     grok.layer(ISantaTemplatesLayer)
     grok.name('santa-view')
     grok.template('top-view')
-
