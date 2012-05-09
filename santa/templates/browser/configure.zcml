@@ -1,0 +1,14 @@
+<configure
+  i18n_domain="santa.templates"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:five="http://namespaces.zope.org/five"
+  xmlns="http://namespaces.zope.org/zope"
+  >
+
+  <browser:resourceDirectory
+    name="santa.templates.images"
+    directory="images"
+    layer=".interfaces.ISantaTemplatesLayer"
+    />
+
+</configure>

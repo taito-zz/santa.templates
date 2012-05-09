@@ -5,7 +5,7 @@ Log in as the portal owner::
 
 Go to santa-view::
 
-    >>> browser.open('/santa-view')
+    >>> browser.open('/@@santa-view')
 
     >>> 'Text of SCF.' in browser.contents
     True

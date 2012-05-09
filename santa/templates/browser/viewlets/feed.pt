@@ -1,0 +1,43 @@
+<section
+  i18n:domain="santa.templates"
+  class="santa-feed"
+  tal:condition="viewlet/items"
+  tal:define="
+    parent viewlet/parent;
+  "
+  >
+  <h1>
+    <a
+      tal:attributes="
+        href parent/getURL;
+        title parent/Title;
+        alt parent/Description;
+      "
+      tal:content="parent/Title"
+      />
+  </h1>
+  <article tal:repeat="item viewlet/items">
+    <img tal:replace="structure item/image" />
+    <h1>
+      <a
+        tal:attributes="
+          href item/url;
+          title item/title;
+          alt item/description;
+        "
+        tal:content="item/title"
+        />
+    </h1>
+    <h2>
+      <span
+        class="santa-date"
+        tal:content="item/date"
+        />
+    </h2>
+    <p tal:content="item/description" />
+    <p>
+      <a tal:attributes="href item/url;"
+         i18n:translate="">Read more</a>
+    </p>
+  </article>
+</section>

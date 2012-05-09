@@ -78,6 +78,25 @@ def setUp(self):
     ]
     en.reindexObject()
 
+    news = portal[
+        portal.invokeFactory(
+            'Folder',
+            'news',
+            title="News",
+            language='',
+        )
+    ]
+    news.reindexObject()
+    news01 = news[
+        news.invokeFactory(
+            'News Item',
+            'news01',
+            title="News01",
+            description="Description of News01."
+        )
+    ]
+    news01.reindexObject()
+
     transaction.commit()
 
 

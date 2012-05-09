@@ -1,3 +1,4 @@
+from Acquisition import aq_parent
 from OFS.interfaces import IItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
@@ -7,6 +8,9 @@ from plone.app.viewletmanager.manager import OrderedViewletManager
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
 from plone.app.contentlisting.interfaces import IContentListing
+from Products.ATContentTypes.interfaces.news import IATNewsItem
+from Products.ATContentTypes.interfaces.document import IATDocument
+from Products.ATContentTypes.interfaces.event import IATEvent
 
 
 grok.templatedir('viewlets')
@@ -89,7 +93,7 @@ class AboutViewlet(BaseViewlet):
                     'description': brain.Description,
                     'text': obj.getField('text').get(obj),
                     'title': brain.Title,
-                    'url': brain.absolute_url(),
+                    'url': aq_parent(obj).absolute_url(),
                 }
 
     def inquiries(self):
@@ -105,3 +109,87 @@ class AboutViewlet(BaseViewlet):
                 }
             }
             return IContentListing(catalog(query))
+
+
+class FeedViewlet(BaseViewlet):
+    grok.baseclass()
+    grok.template('feed')
+
+    oid = ''
+
+    def parent_path(self):
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal = portal_state.portal()
+        return '{0}/{1}'.format(
+            '/'.join(portal.getPhysicalPath()),
+            self.oid,
+        )
+
+    def parent(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        query = {
+            'path': {
+                'query': self.parent_path(),
+                'depth': 0,
+            }
+        }
+        brains = catalog(query)
+        if brains:
+            return brains[0]
+
+    def getItems(self, interface=IATDocument, limit=1, sort_on="modified"):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        query = {
+            'path': {
+                'query': self.parent_path(),
+                'depth': 1,
+            },
+            'object_provides': interface.__identifier__,
+            'sort_limit': limit,
+            'sort_on': sort_on,
+            'sort_order': 'descending',
+        }
+        ploneview = getMultiAdapter(
+            (self.context, self.request),
+            name=u'plone'
+        )
+        return  [
+            {
+                'title': item.Title(),
+                'url': item.getURL(),
+                'description': item.Description(),
+                'date': ploneview.toLocalizedTime(self.date(item, sort_on)),
+                'image': self.image(item),
+            } for item in IContentListing(catalog(query)[:limit])
+        ]
+
+    def date(self, item, sort_on):
+        if sort_on == 'modified':
+            return item.ModificationDate()
+
+    def image(self, item):
+        obj = item.getObject()
+        field_name = 'image' if obj.getField('image') else 'leadImage'
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name=u'plone_portal_state'
+        )
+        image_url = '{0}/++resource++santa.templates.images/feed-fallback.png'.format(
+            portal_state.portal_url()
+        )
+        html = '<img src="{0}" alt="{1}" title="{2}" />'.format(
+            image_url,
+            item.Description(),
+            item.Title(),
+        )
+        if obj.getField('image').get(obj):
+            html = obj.restrictedTraverse('images').tag(field_name, scale='mini')
+        return html
+
+
+class NewsViewlet(FeedViewlet):
+    grok.name('santa.viewlet.news')
+    oid = 'news'
+
+    def items(self):
+        return self.getItems(interface=IATNewsItem)
