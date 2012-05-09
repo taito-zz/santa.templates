@@ -16,6 +16,10 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('santa.content'))
 
+    def test_is_collective_contentleadimage_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
+
     def test_browserlayer(self):
         from santa.templates.browser.interfaces import ISantaTemplatesLayer
         from plone.browserlayer import utils
@@ -38,6 +42,14 @@ class TestCase(IntegrationTestCase):
 
     def test_portal__layout(self):
         self.assertEqual(self.portal.getLayout(), 'santa-view')
+
+    def test__cli_properties(self):
+        portal_properties = getToolByName(self.portal, 'portal_properties')
+        cli_properties = getattr(portal_properties, 'cli_properties')
+        self.assertEqual(
+            cli_properties.getProperty('allowed_types'),
+            ('Event',)
+        )
 
     def test_uninstall__package(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')

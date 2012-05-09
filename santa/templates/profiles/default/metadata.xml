@@ -3,5 +3,6 @@
   <version>1</version>
   <dependencies>
     <dependency>profile-santa.content:default</dependency>
+    <dependency>profile-collective.contentleadimage:default</dependency>
   </dependencies>
 </metadata>

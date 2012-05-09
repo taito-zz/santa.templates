@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+
+ <object name="cli_properties" meta_type="Plone Property Sheet">
+  <property name="allowed_types" type="lines" purge="True">
+   <element value="Event"/>
+  </property>
+ </object>
+
+</object>

@@ -1,16 +1,18 @@
 from Acquisition import aq_parent
 from OFS.interfaces import IItem
+from Products.ATContentTypes.interfaces.document import IATDocument
+from Products.ATContentTypes.interfaces.event import IATEvent
+from Products.ATContentTypes.interfaces.image import IATImage
+from Products.ATContentTypes.interfaces.news import IATNewsItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from five import grok
+from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.layout.viewlets.interfaces import IPortalHeader
 from plone.app.viewletmanager.manager import OrderedViewletManager
+from santa.content.partner import IPartner
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
-from plone.app.contentlisting.interfaces import IContentListing
-from Products.ATContentTypes.interfaces.news import IATNewsItem
-from Products.ATContentTypes.interfaces.document import IATDocument
-from Products.ATContentTypes.interfaces.event import IATEvent
 
 
 grok.templatedir('viewlets')
@@ -177,7 +179,7 @@ class FeedViewlet(BaseViewlet):
         image_url = '{0}/++resource++santa.templates.images/feed-fallback.png'.format(
             portal_state.portal_url()
         )
-        html = '<img src="{0}" alt="{1}" title="{2}" />'.format(
+        html = '<img class="santa-fall-back" src="{0}" alt="{1}" title="{2}" />'.format(
             image_url,
             item.Description(),
             item.Title(),
@@ -193,3 +195,27 @@ class NewsViewlet(FeedViewlet):
 
     def items(self):
         return self.getItems(interface=IATNewsItem)
+
+
+class EventsViewlet(FeedViewlet):
+    grok.name('santa.viewlet.events')
+    oid = 'events'
+
+    def items(self):
+        return self.getItems(interface=IATEvent)
+
+
+class PartnersViewlet(FeedViewlet):
+    grok.name('santa.viewlet.partners')
+    oid = 'partners'
+
+    def items(self):
+        return self.getItems(interface=IPartner)
+
+
+class CasesViewlet(FeedViewlet):
+    grok.name('santa.viewlet.cases')
+    oid = 'cases'
+
+    def items(self):
+        return self.getItems(interface=IATImage)
