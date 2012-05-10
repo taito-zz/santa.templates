@@ -13,6 +13,9 @@ from plone.app.viewletmanager.manager import OrderedViewletManager
 from santa.content.partner import IPartner
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
+from plone.namedfile.file import NamedImage
+
+import Missing
 
 
 grok.templatedir('viewlets')
@@ -115,7 +118,8 @@ class AboutViewlet(BaseViewlet):
 
 class FeedViewlet(BaseViewlet):
     grok.baseclass()
-    grok.template('feed')
+    name = 'feed'
+    grok.template(name)
 
     oid = ''
 
@@ -127,11 +131,14 @@ class FeedViewlet(BaseViewlet):
             self.oid,
         )
 
+    def _path(self):
+        return self.parent_path()
+
     def parent(self):
         catalog = getToolByName(self.context, 'portal_catalog')
         query = {
             'path': {
-                'query': self.parent_path(),
+                'query': self._path(),
                 'depth': 0,
             }
         }
@@ -139,13 +146,22 @@ class FeedViewlet(BaseViewlet):
         if brains:
             return brains[0]
 
-    def getItems(self, interface=IATDocument, limit=1, sort_on="modified"):
+    def getItems(
+        self,
+        interface=IATDocument,
+        limit=1,
+        sort_on="modified",
+        depth=1
+    ):
         catalog = getToolByName(self.context, 'portal_catalog')
+        path = self.parent_path()
+        if depth:
+            path = {
+                'query': path,
+                'depth': depth,
+            }
         query = {
-            'path': {
-                'query': self.parent_path(),
-                'depth': 1,
-            },
+            'path': path,
             'object_provides': interface.__identifier__,
             'sort_limit': limit,
             'sort_on': sort_on,
@@ -160,31 +176,46 @@ class FeedViewlet(BaseViewlet):
                 'title': item.Title(),
                 'url': item.getURL(),
                 'description': item.Description(),
-                'date': ploneview.toLocalizedTime(self.date(item, sort_on)),
+                'date': self.date(item, sort_on),
+                # 'start': ploneview.toLocalizedTime(item.start) if item.start is not Missing.Value else None,
+                'end': ploneview.toLocalizedTime(item.end, long_format=True) if item.end is not Missing.Value else None,
                 'image': self.image(item),
             } for item in IContentListing(catalog(query)[:limit])
         ]
 
     def date(self, item, sort_on):
+        ploneview = getMultiAdapter(
+            (self.context, self.request),
+            name=u'plone'
+        )
         if sort_on == 'modified':
-            return item.ModificationDate()
+            return ploneview.toLocalizedTime(item.ModificationDate())
+        else:
+            return ploneview.toLocalizedTime(getattr(item, sort_on), long_format=True)
 
     def image(self, item):
-        obj = item.getObject()
-        field_name = 'image' if obj.getField('image') else 'leadImage'
         portal_state = getMultiAdapter(
             (self.context, self.request),
             name=u'plone_portal_state'
         )
-        image_url = '{0}/++resource++santa.templates.images/feed-fallback.png'.format(
-            portal_state.portal_url()
+        image_url = '{0}/++resource++santa.templates.images/{1}-fallback.png'.format(
+            portal_state.portal_url(),
+            self.name
         )
         html = '<img class="santa-fall-back" src="{0}" alt="{1}" title="{2}" />'.format(
             image_url,
             item.Description(),
             item.Title(),
         )
-        if obj.getField('image').get(obj):
+        obj = item.getObject()
+        field_name = 'image' if (
+            obj.getField('image') or hasattr(obj, 'image')
+        ) else 'leadImage'
+        field = obj.getField(field_name) or getattr(obj, field_name)
+        isins = isinstance(field, NamedImage)
+        if (
+            field and not isins and field.get(obj)
+        ) or isins:
             html = obj.restrictedTraverse('images').tag(field_name, scale='mini')
         return html
 
@@ -202,7 +233,7 @@ class EventsViewlet(FeedViewlet):
     oid = 'events'
 
     def items(self):
-        return self.getItems(interface=IATEvent)
+        return self.getItems(interface=IATEvent, sort_on='start')
 
 
 class PartnersViewlet(FeedViewlet):
@@ -215,7 +246,14 @@ class PartnersViewlet(FeedViewlet):
 
 class CasesViewlet(FeedViewlet):
     grok.name('santa.viewlet.cases')
-    oid = 'cases'
+    oid = 'partners'
 
     def items(self):
-        return self.getItems(interface=IATImage)
+        return self.getItems(interface=IATImage, depth=None)
+
+    def _path(self):
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal = portal_state.portal()
+        return '{0}/cases'.format(
+            '/'.join(portal.getPhysicalPath()),
+        )

@@ -25,6 +25,13 @@ class TestCase(IntegrationTestCase):
         from plone.browserlayer import utils
         self.failUnless(ISantaTemplatesLayer in utils.registered_layers())
 
+    def test_metadata__version(self):
+        setup = getToolByName(self.portal, 'portal_setup')
+        self.assertEqual(
+            setup.getVersionForProfile('profile-santa.templates:default'),
+            u'1'
+        )
+
     def test_types__Plone_Site__immediate_view(self):
         portal_types = getToolByName(self.portal, 'portal_types')
         type_info = portal_types.getTypeInfo('Plone Site')
@@ -49,6 +56,21 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
             cli_properties.getProperty('allowed_types'),
             ('Event',)
+        )
+
+    def test_viewlets__santa_top_manager(self):
+        from zope.component import getUtility
+        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+        storage = getUtility(IViewletSettingsStorage)
+        self.assertEqual(
+            storage.getOrder('santa.top.manager', '*'),
+            (
+                u'santa.viewlet.about',
+                u'santa.viewlet.news',
+                u'santa.viewlet.events',
+                u'santa.viewlet.partners',
+                u'santa.viewlet.cases',
+            )
         )
 
     def test_uninstall__package(self):

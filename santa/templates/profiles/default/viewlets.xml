@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object>
+  <order manager="santa.top.manager" skinname="*">
+    <viewlet name="santa.viewlet.about"/>
+    <viewlet name="santa.viewlet.news"/>
+    <viewlet name="santa.viewlet.events"/>
+    <viewlet name="santa.viewlet.partners"/>
+    <viewlet name="santa.viewlet.cases"/>
+  </order>
+</object>

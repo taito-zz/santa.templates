@@ -8,8 +8,10 @@
   >
   <body>
     <metal:main fill-slot="main">
-        <div tal:replace="structure provider:santa.top.manager" />
-        <div tal:replace="structure provider:plone.belowcontentbody" />
+        <div id="santa-top">
+          <div tal:replace="structure provider:santa.top.manager" />
+          <div tal:replace="structure provider:plone.belowcontentbody" />
+        </div>
     </metal:main>
   </body>
 </html>

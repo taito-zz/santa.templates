@@ -18,7 +18,7 @@
         tal:content="link/Title"
         />
     </li>
-    <li>
+    <li tal:condition="item/text">
       <a
         tal:attributes="
           href item/url;

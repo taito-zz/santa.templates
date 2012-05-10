@@ -29,10 +29,15 @@
         />
     </h1>
     <h2>
-      <span
-        class="santa-date"
-        tal:content="item/date"
-        />
+      <span class="santa-date">
+        <span
+          tal:replace="item/date"
+          />
+        <tal:block tal:condition="item/end">
+          -
+          <span tal:replace="item/end" />
+        </tal:block>
+      <span>
     </h2>
     <p tal:content="item/description" />
     <p>
