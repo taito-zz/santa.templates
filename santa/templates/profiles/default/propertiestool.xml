@@ -4,6 +4,7 @@
  <object name="cli_properties" meta_type="Plone Property Sheet">
   <property name="allowed_types" type="lines" purge="True">
    <element value="Event"/>
+   <element value="FormFolder"/>
   </property>
  </object>
 

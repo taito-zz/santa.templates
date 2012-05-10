@@ -55,7 +55,7 @@ class TestCase(IntegrationTestCase):
         cli_properties = getattr(portal_properties, 'cli_properties')
         self.assertEqual(
             cli_properties.getProperty('allowed_types'),
-            ('Event',)
+            ('Event', 'FormFolder')
         )
 
     def test_viewlets__santa_top_manager(self):

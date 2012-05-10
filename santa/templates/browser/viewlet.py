@@ -2,18 +2,20 @@ from Acquisition import aq_parent
 from OFS.interfaces import IItem
 from Products.ATContentTypes.interfaces.document import IATDocument
 from Products.ATContentTypes.interfaces.event import IATEvent
+from Products.ATContentTypes.interfaces.folder import IATFolder
 from Products.ATContentTypes.interfaces.image import IATImage
 from Products.ATContentTypes.interfaces.news import IATNewsItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.PloneFormGen.interfaces import IPloneFormGenForm
 from five import grok
 from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.layout.viewlets.interfaces import IPortalHeader
 from plone.app.viewletmanager.manager import OrderedViewletManager
+from plone.namedfile.file import NamedImage
 from santa.content.partner import IPartner
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
-from plone.namedfile.file import NamedImage
 
 import Missing
 
@@ -58,6 +60,13 @@ class HeadTitleViewlet(grok.Viewlet):
         return items
 
 
+class SantaInquiriesViewletManager(OrderedViewletManager, grok.ViewletManager):
+    """Viewlet manager to Inquiries Folder."""
+    grok.context(IATFolder)
+    grok.layer(ISantaTemplatesLayer)
+    grok.name('santa.inquiries.manager')
+
+
 class SantaTopViewletManager(OrderedViewletManager, grok.ViewletManager):
     """Viewlet manager to Santa Top."""
     grok.context(IPloneSiteRoot)
@@ -68,7 +77,7 @@ class SantaTopViewletManager(OrderedViewletManager, grok.ViewletManager):
 class BaseViewlet(grok.Viewlet):
     """Base Viewlet Class."""
     grok.baseclass()
-    grok.context(IPloneSiteRoot)
+    grok.context(IItem)
     grok.layer(ISantaTemplatesLayer)
     grok.require('zope2.View')
     grok.viewletmanager(SantaTopViewletManager)
@@ -111,7 +120,8 @@ class AboutViewlet(BaseViewlet):
                 'path': {
                     'query': '/'.join(item.getPhysicalPath()),
                     'depth': 1,
-                }
+                },
+                'object_provides': IPloneFormGenForm.__identifier__,
             }
             return IContentListing(catalog(query))
 
@@ -177,7 +187,6 @@ class FeedViewlet(BaseViewlet):
                 'url': item.getURL(),
                 'description': item.Description(),
                 'date': self.date(item, sort_on),
-                # 'start': ploneview.toLocalizedTime(item.start) if item.start is not Missing.Value else None,
                 'end': ploneview.toLocalizedTime(item.end, long_format=True) if item.end is not Missing.Value else None,
                 'image': self.image(item),
             } for item in IContentListing(catalog(query)[:limit])
@@ -257,3 +266,12 @@ class CasesViewlet(FeedViewlet):
         return '{0}/cases'.format(
             '/'.join(portal.getPhysicalPath()),
         )
+
+
+class InquriesViewlet(FeedViewlet):
+    grok.name('santa.viewlet.inquries')
+    grok.viewletmanager(SantaInquiriesViewletManager)
+    oid = 'inquiries'
+
+    def items(self):
+        return self.getItems(interface=IPloneFormGenForm)
