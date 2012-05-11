@@ -7,7 +7,7 @@
     <viewlet name="santa.viewlet.partners"/>
     <viewlet name="santa.viewlet.cases"/>
   </order>
-  <order manager="santa.inquiries.manager" skinname="*">
-    <viewlet name="santa.viewlet.inquiries"/>
+  <order manager="santa.folder.manager" skinname="*">
+    <viewlet name="santa.viewlet.folder"/>
   </order>
 </object>

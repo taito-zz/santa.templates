@@ -33,7 +33,10 @@ class HeadTitleViewlet(grok.Viewlet):
 
     def head(self):
         catalog = getToolByName(self.context, 'portal_catalog')
-        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name="plone_portal_state"
+        )
         portal = portal_state.portal()
         items = {
             'title': portal.title,
@@ -89,7 +92,10 @@ class AboutViewlet(BaseViewlet):
 
     def item(self):
         catalog = getToolByName(self.context, 'portal_catalog')
-        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name="plone_portal_state"
+        )
         portal = portal_state.portal()
         item = portal.get('foundation')
         if item:
@@ -112,7 +118,10 @@ class AboutViewlet(BaseViewlet):
 
     def inquiries(self):
         catalog = getToolByName(self.context, 'portal_catalog')
-        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name="plone_portal_state"
+        )
         portal = portal_state.portal()
         item = portal.get('inquiries')
         if item:
@@ -134,7 +143,10 @@ class FeedViewlet(BaseViewlet):
     oid = ''
 
     def parent_path(self):
-        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name="plone_portal_state"
+        )
         portal = portal_state.portal()
         return '{0}/{1}'.format(
             '/'.join(portal.getPhysicalPath()),
@@ -183,10 +195,6 @@ class FeedViewlet(BaseViewlet):
         return catalog(query)
 
     def _items(self, brains):
-        ploneview = getMultiAdapter(
-            (self.context, self.request),
-            name=u'plone'
-        )
         return  [
             {
                 'title': item.Title(),
@@ -275,7 +283,7 @@ class CasesViewlet(FeedViewlet):
     oid = 'partners'
 
     def items(self):
-        brains = self._brains(interface=IATImage, path=self.parent_path(), depth=None,limit=1)
+        brains = self._brains(interface=IATImage, path=self.parent_path(), depth=None, limit=1)
         return self._items(brains)
 
     def _path(self):
