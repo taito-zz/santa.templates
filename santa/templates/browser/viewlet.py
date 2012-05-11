@@ -156,33 +156,33 @@ class FeedViewlet(BaseViewlet):
         if brains:
             return brains[0]
 
-    def getItems(
+    def _brains(
         self,
         interface=IATDocument,
-        limit=1,
         sort_on="modified",
         path=None,
         depth=1,
+        limit=0,
     ):
         catalog = getToolByName(self.context, 'portal_catalog')
-        if path is None:
-            path = self.parent_path()
-        if depth:
-            path = {
-                'query': path,
-                'depth': depth,
-            }
         query = {
-            'path': path,
             'object_provides': interface.__identifier__,
             'sort_on': sort_on,
             'sort_order': 'descending',
         }
+        if path:
+            if depth:
+                path = {
+                    'query': path,
+                    'depth': depth,
+                }
+            query.update({'path': path})
         if limit:
             query.update({'sort_limit': limit})
-        listing = IContentListing(catalog(query))
-        if limit:
-            listing = listing[:limit]
+            return catalog(query)[:limit]
+        return catalog(query)
+
+    def _items(self, brains):
         ploneview = getMultiAdapter(
             (self.context, self.request),
             name=u'plone'
@@ -192,23 +192,29 @@ class FeedViewlet(BaseViewlet):
                 'title': item.Title(),
                 'url': item.getURL(),
                 'description': item.Description(),
-                'date': self.date(item, sort_on),
-                'end': ploneview.toLocalizedTime(item.end, long_format=True) if item.end is not Missing.Value else None,
+                'date': self._date(item),
+                'end': self._end(item),
                 'image': self.image(item),
-            } for item in listing
+            } for item in IContentListing(brains)
         ]
 
-    def date(self, item, sort_on):
+    def _date(self, item):
         ploneview = getMultiAdapter(
             (self.context, self.request),
             name=u'plone'
         )
-        if sort_on == 'modified':
-            return ploneview.toLocalizedTime(item.ModificationDate())
-        elif sort_on == 'start':
-            return ploneview.toLocalizedTime(getattr(item, sort_on), long_format=True)
+        if item.start is not Missing.Value:
+            return ploneview.toLocalizedTime(item.start, long_format=True)
         else:
-            return None
+            return ploneview.toLocalizedTime(item.ModificationDate())
+
+    def _end(self, item):
+        ploneview = getMultiAdapter(
+            (self.context, self.request),
+            name=u'plone'
+        )
+        if item.end is not Missing.Value:
+            return ploneview.toLocalizedTime(item.end, long_format=True)
 
     def image(self, item):
         portal_state = getMultiAdapter(
@@ -242,7 +248,8 @@ class NewsViewlet(FeedViewlet):
     oid = 'news'
 
     def items(self):
-        return self.getItems(interface=IATNewsItem)
+        brains = self._brains(interface=IATNewsItem, limit=1)
+        return self._items(brains)
 
 
 class EventsViewlet(FeedViewlet):
@@ -250,12 +257,8 @@ class EventsViewlet(FeedViewlet):
     oid = 'events'
 
     def items(self):
-        portal_state = getMultiAdapter(
-            (self.context, self.request),
-            name=u'plone_portal_state'
-        )
-        path = '/'.join(portal_state.portal().getPhysicalPath())
-        return self.getItems(interface=IATEvent, sort_on='start', path=path, depth=None)
+        brains = self._brains(interface=IATEvent, sort_on='start')
+        return self._items(brains[-1:])
 
 
 class PartnersViewlet(FeedViewlet):
@@ -263,7 +266,8 @@ class PartnersViewlet(FeedViewlet):
     oid = 'partners'
 
     def items(self):
-        return self.getItems(interface=IPartner)
+        brains = self._brains(interface=IPartner, limit=1)
+        return self._items(brains)
 
 
 class CasesViewlet(FeedViewlet):
@@ -271,7 +275,8 @@ class CasesViewlet(FeedViewlet):
     oid = 'partners'
 
     def items(self):
-        return self.getItems(interface=IATImage, depth=None)
+        brains = self._brains(interface=IATImage, path=self.parent_path(), depth=None,limit=1)
+        return self._items(brains)
 
     def _path(self):
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
@@ -296,13 +301,13 @@ class FolderViewlet(FeedViewlet):
 
     def items(self):
         if self.oid == 'inquiries':
-            return self.getItems(interface=IPloneFormGenForm, sort_on=None, limit=None)
+            return self._items(interface=IPloneFormGenForm, sort_on=None, limit=None)
         if self.oid == 'news':
-            return self.getItems(interface=IATNewsItem, limit=5)
+            return self._items(interface=IATNewsItem, limit=5)
         if self.oid == 'events':
             portal_state = getMultiAdapter(
                 (self.context, self.request),
                 name=u'plone_portal_state'
             )
             path = '/'.join(portal_state.portal().getPhysicalPath())
-            return self.getItems(interface=IATEvent, limit=5, path=path, depth=None, sort_on='start')
+            return self._items(interface=IATEvent, limit=5, path=path, depth=None, sort_on='start')

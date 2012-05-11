@@ -4,6 +4,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.testing import layered
 from zope.testing import renormalizing
+from DateTime import DateTime
 
 import doctest
 import manuel.codeblock
@@ -60,6 +61,7 @@ def setUp(self):
     ]
     en.reindexObject()
 
+    # Create Inquiries Folder.
     inquiries = portal[
         portal.invokeFactory(
             'Folder',
@@ -68,16 +70,29 @@ def setUp(self):
         )
     ]
     inquiries.reindexObject()
-    en = inquiries[
+
+    # Add two forms which link comes to top page.
+    form01 = inquiries[
         inquiries.invokeFactory(
-            'Document',
-            'en',
-            title='English Enquiry',
-            description='Description of English Enquiry',
+            'FormFolder',
+            'form01',
+            title='Form01',
+            description='Description of Form01.',
         )
     ]
-    en.reindexObject()
+    form01.reindexObject()
 
+    form02 = inquiries[
+        inquiries.invokeFactory(
+            'FormFolder',
+            'form02',
+            title='Form02',
+            description='Description of Form01.',
+        )
+    ]
+    form02.reindexObject()
+
+    # Add News folder and two News Items.
     news = portal[
         portal.invokeFactory(
             'Folder',
@@ -96,6 +111,48 @@ def setUp(self):
         )
     ]
     news01.reindexObject()
+    news02 = news[
+        news.invokeFactory(
+            'News Item',
+            'news02',
+            title="News02",
+            description="Description of News02."
+        )
+    ]
+    news02.reindexObject()
+
+    # Add Events folder and two Events.
+    events = portal[
+        portal.invokeFactory(
+            'Folder',
+            'events',
+            title="Events",
+            language='',
+        )
+    ]
+    events.reindexObject()
+    event01 = events[
+        events.invokeFactory(
+            'Event',
+            'event01',
+            title="Event01",
+            description="Description of Event01.",
+            startDate=DateTime('2012/05/12'),
+            endDate=DateTime('2012/05/14'),
+        )
+    ]
+    event01.reindexObject()
+    event02 = events[
+        events.invokeFactory(
+            'Event',
+            'event02',
+            title="Event02",
+            description="Description of Event02.",
+            startDate=DateTime('2012/05/14'),
+            endDate=DateTime('2012/05/15'),
+        )
+    ]
+    event02.reindexObject()
 
     transaction.commit()
 

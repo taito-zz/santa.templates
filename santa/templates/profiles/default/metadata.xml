@@ -4,5 +4,6 @@
   <dependencies>
     <dependency>profile-santa.content:default</dependency>
     <dependency>profile-collective.contentleadimage:default</dependency>
+    <dependency>profile-Products.PloneFormGen:default</dependency>
   </dependencies>
 </metadata>
