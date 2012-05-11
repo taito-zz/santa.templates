@@ -9,7 +9,7 @@
   <body>
     <metal:main fill-slot="main">
         <section id="santa-folder">
-          <div tal:replace="structure provider:santa.inquiries.manager" />
+          <div tal:replace="structure provider:santa.folder.manager" />
         </section>
         <div tal:replace="structure provider:plone.belowcontentbody" />
 

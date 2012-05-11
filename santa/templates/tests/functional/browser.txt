@@ -9,5 +9,3 @@ Go to santa-view::
 
     >>> 'Text of SCF.' in browser.contents
     True
-    >>> 'English Enquiry' in browser.contents
-    True

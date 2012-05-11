@@ -28,7 +28,7 @@
         tal:content="item/title"
         />
     </h1>
-    <h2>
+    <h2 tal:content="item/date">
       <span class="santa-date">
         <span
           tal:replace="item/date"

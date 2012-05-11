@@ -64,7 +64,7 @@ class SantaInquiriesViewletManager(OrderedViewletManager, grok.ViewletManager):
     """Viewlet manager to Inquiries Folder."""
     grok.context(IATFolder)
     grok.layer(ISantaTemplatesLayer)
-    grok.name('santa.inquiries.manager')
+    grok.name('santa.folder.manager')
 
 
 class SantaTopViewletManager(OrderedViewletManager, grok.ViewletManager):
@@ -161,10 +161,12 @@ class FeedViewlet(BaseViewlet):
         interface=IATDocument,
         limit=1,
         sort_on="modified",
-        depth=1
+        path=None,
+        depth=1,
     ):
         catalog = getToolByName(self.context, 'portal_catalog')
-        path = self.parent_path()
+        if path is None:
+            path = self.parent_path()
         if depth:
             path = {
                 'query': path,
@@ -173,10 +175,14 @@ class FeedViewlet(BaseViewlet):
         query = {
             'path': path,
             'object_provides': interface.__identifier__,
-            'sort_limit': limit,
             'sort_on': sort_on,
             'sort_order': 'descending',
         }
+        if limit:
+            query.update({'sort_limit': limit})
+        listing = IContentListing(catalog(query))
+        if limit:
+            listing = listing[:limit]
         ploneview = getMultiAdapter(
             (self.context, self.request),
             name=u'plone'
@@ -189,7 +195,7 @@ class FeedViewlet(BaseViewlet):
                 'date': self.date(item, sort_on),
                 'end': ploneview.toLocalizedTime(item.end, long_format=True) if item.end is not Missing.Value else None,
                 'image': self.image(item),
-            } for item in IContentListing(catalog(query)[:limit])
+            } for item in listing
         ]
 
     def date(self, item, sort_on):
@@ -199,8 +205,10 @@ class FeedViewlet(BaseViewlet):
         )
         if sort_on == 'modified':
             return ploneview.toLocalizedTime(item.ModificationDate())
-        else:
+        elif sort_on == 'start':
             return ploneview.toLocalizedTime(getattr(item, sort_on), long_format=True)
+        else:
+            return None
 
     def image(self, item):
         portal_state = getMultiAdapter(
@@ -242,7 +250,12 @@ class EventsViewlet(FeedViewlet):
     oid = 'events'
 
     def items(self):
-        return self.getItems(interface=IATEvent, sort_on='start')
+        portal_state = getMultiAdapter(
+            (self.context, self.request),
+            name=u'plone_portal_state'
+        )
+        path = '/'.join(portal_state.portal().getPhysicalPath())
+        return self.getItems(interface=IATEvent, sort_on='start', path=path, depth=None)
 
 
 class PartnersViewlet(FeedViewlet):
@@ -268,10 +281,28 @@ class CasesViewlet(FeedViewlet):
         )
 
 
-class InquriesViewlet(FeedViewlet):
-    grok.name('santa.viewlet.inquries')
+class FolderViewlet(FeedViewlet):
+    grok.name('santa.viewlet.folder')
     grok.viewletmanager(SantaInquiriesViewletManager)
-    oid = 'inquiries'
+
+    def parent_path(self):
+        self.oid = self.context.id
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        portal = portal_state.portal()
+        return '{0}/{1}'.format(
+            '/'.join(portal.getPhysicalPath()),
+            self.oid,
+        )
 
     def items(self):
-        return self.getItems(interface=IPloneFormGenForm)
+        if self.oid == 'inquiries':
+            return self.getItems(interface=IPloneFormGenForm, sort_on=None, limit=None)
+        if self.oid == 'news':
+            return self.getItems(interface=IATNewsItem, limit=5)
+        if self.oid == 'events':
+            portal_state = getMultiAdapter(
+                (self.context, self.request),
+                name=u'plone_portal_state'
+            )
+            path = '/'.join(portal_state.portal().getPhysicalPath())
+            return self.getItems(interface=IATEvent, limit=5, path=path, depth=None, sort_on='start')
