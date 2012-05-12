@@ -78,6 +78,17 @@ class TestCase(IntegrationTestCase):
             )
         )
 
+    def test_viewlets__santa_folder_manager(self):
+        from zope.component import getUtility
+        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+        storage = getUtility(IViewletSettingsStorage)
+        self.assertEqual(
+            storage.getOrder('santa.folder.manager', '*'),
+            (
+                u'santa.viewlet.folder',
+            )
+        )
+
     def test_uninstall__package(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['santa.templates'])

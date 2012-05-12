@@ -66,11 +66,24 @@ def setUp(self):
         portal.invokeFactory(
             'Folder',
             'inquiries',
+            title='Inquiries',
+            description='Description of Inquiries.',
             language='',
         )
     ]
     inquiries.setLayout('santa-view')
     inquiries.reindexObject()
+
+    en = inquiries[
+        inquiries.invokeFactory(
+            'Document',
+            'en',
+            title='English Inquiries',
+            description='Description of English Inquiries.',
+            text='<p>Text of English Inquiries.</p>',
+        )
+    ]
+    en.reindexObject()
 
     # Add two forms which link comes to top page.
     form01 = inquiries[

@@ -147,6 +147,9 @@ class FeedViewlet(BaseViewlet):
     def has_date(self):
         return True
 
+    def show_description(self):
+        return False
+
     def parent_path(self):
         portal_state = getMultiAdapter(
             (self.context, self.request),
@@ -185,6 +188,9 @@ class FeedViewlet(BaseViewlet):
         parent = self.parent()
         return parent and parent.getURL()
 
+    def text(self):
+        return None
+
     def _brains(
         self,
         interface=IATDocument,
@@ -222,6 +228,12 @@ class FeedViewlet(BaseViewlet):
                 'image': self.image(item),
             } for item in IContentListing(brains)
         ]
+
+    def items(self):
+        return True
+
+    def show_docs(self):
+        return self.items()
 
     def _date(self, item):
         ploneview = getMultiAdapter(
@@ -378,4 +390,49 @@ class FolderViewlet(FeedViewlet):
             brains = self._brains(interface=IATImage, path=self.parent_path(), depth=None, limit=limit)
         if oid == 'inquiries':
             brains = self._brains(interface=IPloneFormGenForm, sort_on=None, limit=None)
+        if oid == 'foundation':
+            return None
         return self._items(brains)
+
+    def show_docs(self):
+        oid = self.context.id
+        if oid == 'foundation':
+            return True
+        return super(FolderViewlet, self).show_docs()
+
+    def show_description(self):
+        oid = self.context.id
+        if oid == 'foundation':
+            return True
+
+    def _document(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        languages = getToolByName(self.context, 'portal_languages')
+        oids = languages.supported_langs
+        query = {
+            'id': oids,
+            'path': {
+                'query': '/'.join(self.context.getPhysicalPath()),
+                'depth': 1,
+            },
+        }
+        brains = catalog(query)
+        if brains:
+            return brains[0]
+
+    def title(self):
+        doc = self._document()
+        return doc and doc.Title or self.context.Title()
+
+    def description(self):
+        doc = self._document()
+        return doc and doc.Description or self.context.Description()
+
+    def url(self):
+        return self.context.absolute_url()
+
+    def text(self):
+        doc = self._document()
+        if doc:
+            obj = doc.getObject()
+            return obj.getField('text').get(obj)
