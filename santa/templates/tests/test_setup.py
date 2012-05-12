@@ -71,7 +71,8 @@ class TestCase(IntegrationTestCase):
             (
                 u'santa.viewlet.about',
                 u'santa.viewlet.news',
-                u'santa.viewlet.events',
+                u'santa.viewlet.comingevents',
+                u'santa.viewlet.latestevents',
                 u'santa.viewlet.partners',
                 u'santa.viewlet.cases',
             )

@@ -2,18 +2,15 @@
   i18n:domain="santa.templates"
   class="santa-feed"
   tal:condition="viewlet/items"
-  tal:define="
-    parent viewlet/parent;
-  "
   >
   <h1>
     <a
       tal:attributes="
-        href parent/getURL;
-        title parent/Title;
-        alt parent/Description;
+        href viewlet/url;
+        title viewlet/title;
+        alt viewlet/description;
       "
-      tal:content="parent/Title"
+      tal:content="viewlet/title"
       />
   </h1>
   <article tal:repeat="item viewlet/items">
@@ -28,7 +25,7 @@
         tal:content="item/title"
         />
     </h1>
-    <h2 tal:content="item/date">
+    <h2 tal:condition="viewlet/has_date">
       <span class="santa-date">
         <span
           tal:replace="item/date"
@@ -37,7 +34,7 @@
           -
           <span tal:replace="item/end" />
         </tal:block>
-      <span>
+      </span>
     </h2>
     <p tal:content="item/description" />
     <p>

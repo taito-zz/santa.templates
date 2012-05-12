@@ -69,6 +69,7 @@ def setUp(self):
             language='',
         )
     ]
+    inquiries.setLayout('santa-view')
     inquiries.reindexObject()
 
     # Add two forms which link comes to top page.
@@ -87,7 +88,7 @@ def setUp(self):
             'FormFolder',
             'form02',
             title='Form02',
-            description='Description of Form01.',
+            description='Description of Form02.',
         )
     ]
     form02.reindexObject()
@@ -101,6 +102,7 @@ def setUp(self):
             language='',
         )
     ]
+    news.setLayout('santa-view')
     news.reindexObject()
     news01 = news[
         news.invokeFactory(
@@ -130,15 +132,17 @@ def setUp(self):
             language='',
         )
     ]
+    events.setLayout('santa-view')
     events.reindexObject()
+    now = DateTime()
     event01 = events[
         events.invokeFactory(
             'Event',
             'event01',
             title="Event01",
             description="Description of Event01.",
-            startDate=DateTime('2012/05/12'),
-            endDate=DateTime('2012/05/14'),
+            startDate=now - 3,
+            endDate=now - 2,
         )
     ]
     event01.reindexObject()
@@ -148,11 +152,104 @@ def setUp(self):
             'event02',
             title="Event02",
             description="Description of Event02.",
-            startDate=DateTime('2012/05/14'),
-            endDate=DateTime('2012/05/15'),
+            startDate=now - 1,
+            endDate=now,
         )
     ]
     event02.reindexObject()
+    event03 = events[
+        events.invokeFactory(
+            'Event',
+            'event03',
+            title="Event03",
+            description="Description of Event03.",
+            startDate=now + 1,
+            endDate=now + 2,
+        )
+    ]
+    event03.reindexObject()
+    event04 = events[
+        events.invokeFactory(
+            'Event',
+            'event04',
+            title="Event04",
+            description="Description of Event04.",
+            startDate=now + 3,
+            endDate=now + 4,
+        )
+    ]
+    event04.reindexObject()
+
+    # Add Partners folder and two partners.
+    partners = portal[
+        portal.invokeFactory(
+            'Folder',
+            'partners',
+            title="Partners",
+            language='',
+        )
+    ]
+    partners.setLayout('santa-view')
+    partners.reindexObject()
+    partner01 = partners[
+        partners.invokeFactory(
+            'santa.Partner',
+            'partner01',
+            title="Partner01",
+            description="Description of Partner01.",
+            address='Street Address of Partner01',
+            post_code='010101',
+            country='fi',
+            email=['partner01@partner01.com'],
+            year='2011',
+        )
+    ]
+    partner01.reindexObject()
+    partner02 = partners[
+        partners.invokeFactory(
+            'santa.Partner',
+            'partner02',
+            title="Partner02",
+            description="Description of Partner02.",
+            address='Street Address of Partner02',
+            post_code='020202',
+            country='ja',
+            email=['partner02@partner02.com'],
+            year='2012',
+        )
+    ]
+    partner02.reindexObject()
+
+    # Add Cases Folder and Images under partner01.
+    cases = portal[
+        portal.invokeFactory(
+            'Folder',
+            'cases',
+            title="Cases",
+            language='',
+        )
+    ]
+    cases.setLayout('santa-view')
+    cases.reindexObject()
+
+    image01 = partner01[
+        partner01.invokeFactory(
+            'Image',
+            'image01',
+            title="Image01",
+            description="Description of Imager01.",
+        )
+    ]
+    image01.reindexObject()
+    image02 = partner01[
+        partner01.invokeFactory(
+            'Image',
+            'image02',
+            title="Image02",
+            description="Description of Imager02.",
+        )
+    ]
+    image02.reindexObject()
 
     transaction.commit()
 
@@ -183,6 +280,7 @@ def DocFileSuite(testfile, flags=FLAGS, setUp=setUp, layer=FUNCTIONAL_TESTING):
 
 
 def test_suite():
+
     return unittest.TestSuite([
         DocFileSuite('functional/browser.txt'),
         ])

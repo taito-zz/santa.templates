@@ -24,7 +24,7 @@ Go to santa-view::
     <a alt="Description of Form01." href="http://nohost/plone/inquiries/form01" title="Form01">Form01</a>
     </li>
     <li>
-    <a alt="Description of Form01." href="http://nohost/plone/inquiries/form02" title="Form02">Form02</a>
+    <a alt="Description of Form02." href="http://nohost/plone/inquiries/form02" title="Form02">Form02</a>
     </li>
     <li>
     <a alt="Save the world for kids" href="http://nohost/plone/foundation" title="Santa Claus Foundation">
@@ -49,14 +49,233 @@ Go to santa-view::
     </article></section>
     --- 2 ---
     <section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/events" title="Coming Events">Coming Events</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event03." title="Event03"><h1>
+    <a alt="Description of Event03." href="http://nohost/plone/events/event03" title="Event03">Event03</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of Event03.</p>
+    <p>
+    <a href="http://nohost/plone/events/event03">Read more</a>
+    </p>
+    </article></section>
+    --- 3 ---
+    <section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/events" title="Latest Events">Latest Events</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event02." title="Event02"><h1>
+    <a alt="Description of Event02." href="http://nohost/plone/events/event02" title="Event02">Event02</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of Event02.</p>
+    <p>
+    <a href="http://nohost/plone/events/event02">Read more</a>
+    </p>
+    </article></section>
+    --- 4 ---
+    <section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/partners" title="Partners">Partners</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner02." title="Partner02"><h1>
+    <a alt="Description of Partner02." href="http://nohost/plone/partners/partner02" title="Partner02">Partner02</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of Partner02.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner02">Read more</a>
+    </p>
+    </article></section>
+    --- 5 ---
+    <section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/cases" title="Cases">Cases</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager02." title="Image02"><h1>
+    <a alt="Description of Imager02." href="http://nohost/plone/partners/partner01/image02" title="Image02">Image02</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of Imager02.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner01/image02">Read more</a>
+    </p>
+    </article></section>
+
+Go to News Folder::
+
+    >>> browser.open('/news')
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/news" title="News">News</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of News02." title="News02"><h1>
+    <a alt="Description of News02." href="http://nohost/plone/news/news02" title="News02">News02</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of News02.</p>
+    <p>
+    <a href="http://nohost/plone/news/news02">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of News01." title="News01"><h1>
+    <a alt="Description of News01." href="http://nohost/plone/news/news01" title="News01">News01</a>
+    </h1>
+    <h2>...</h2>
+    <p>Description of News01.</p>
+    <p>
+    <a href="http://nohost/plone/news/news01">Read more</a>
+    </p>
+    </article></section></section>
+
+Go to Events Folder::
+
+    >>> browser.open('/events')
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
     <a alt="" href="http://nohost/plone/events" title="Events">Events</a>
     </h1>
-    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event01." title="Event01"><h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event04." title="Event04"><h1>
+    <a alt="Description of Event04." href="http://nohost/plone/events/event04" title="Event04">Event04</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Event04.</p>
+    <p>
+    <a href="http://nohost/plone/events/event04">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event03." title="Event03"><h1>
+    <a alt="Description of Event03." href="http://nohost/plone/events/event03" title="Event03">Event03</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Event03.</p>
+    <p>
+    <a href="http://nohost/plone/events/event03">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event02." title="Event02"><h1>
+    <a alt="Description of Event02." href="http://nohost/plone/events/event02" title="Event02">Event02</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Event02.</p>
+    <p>
+    <a href="http://nohost/plone/events/event02">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event01." title="Event01"><h1>
     <a alt="Description of Event01." href="http://nohost/plone/events/event01" title="Event01">Event01</a>
     </h1>
-    <h2>May 12, 2012 12:00 AM</h2>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
     <p>Description of Event01.</p>
     <p>
     <a href="http://nohost/plone/events/event01">Read more</a>
     </p>
-    </article></section>
+    </article></section></section>
+
+Go to Partners Folder::
+
+    >>> browser.open('/partners')
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/partners" title="Partners">Partners</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner02." title="Partner02"><h1>
+    <a alt="Description of Partner02." href="http://nohost/plone/partners/partner02" title="Partner02">Partner02</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Partner02.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner02">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner01." title="Partner01"><h1>
+    <a alt="Description of Partner01." href="http://nohost/plone/partners/partner01" title="Partner01">Partner01</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Partner01.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner01">Read more</a>
+    </p>
+    </article></section></section>
+
+Go to Cases Folder::
+
+    >>> browser.open('/cases')
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/cases" title="Cases">Cases</a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager02." title="Image02"><h1>
+    <a alt="Description of Imager02." href="http://nohost/plone/partners/partner01/image02" title="Image02">Image02</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Imager02.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner01/image02">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager01." title="Image01"><h1>
+    <a alt="Description of Imager01." href="http://nohost/plone/partners/partner01/image01" title="Image01">Image01</a>
+    </h1>
+    <h2>
+    <span class="santa-date">
+    ...
+    </span>
+    </h2>
+    <p>Description of Imager01.</p>
+    <p>
+    <a href="http://nohost/plone/partners/partner01/image01">Read more</a>
+    </p>
+    </article></section></section>
+
+Go to Inquiries Folder::
+
+    >>> browser.open('/inquiries')
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
+    <a alt="" href="http://nohost/plone/inquiries" title=""></a>
+    </h1>
+    <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Form01." title="Form01"><h1>
+    <a alt="Description of Form01." href="http://nohost/plone/inquiries/form01" title="Form01">Form01</a>
+    </h1>
+    <p>Description of Form01.</p>
+    <p>
+    <a href="http://nohost/plone/inquiries/form01">Read more</a>
+    </p>
+    </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Form02." title="Form02"><h1>
+    <a alt="Description of Form02." href="http://nohost/plone/inquiries/form02" title="Form02">Form02</a>
+    </h1>
+    <p>Description of Form02.</p>
+    <p>
+    <a href="http://nohost/plone/inquiries/form02">Read more</a>
+    </p>
+    </article></section></section>
+
+Go to Foundation Folder::
+
+    >>> browser.open('/foundation')

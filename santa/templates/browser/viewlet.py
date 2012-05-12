@@ -1,4 +1,5 @@
 from Acquisition import aq_parent
+from DateTime import DateTime
 from OFS.interfaces import IItem
 from Products.ATContentTypes.interfaces.document import IATDocument
 from Products.ATContentTypes.interfaces.event import IATEvent
@@ -14,6 +15,7 @@ from plone.app.layout.viewlets.interfaces import IPortalHeader
 from plone.app.viewletmanager.manager import OrderedViewletManager
 from plone.namedfile.file import NamedImage
 from santa.content.partner import IPartner
+from santa.templates import _
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 from zope.component import getMultiAdapter
 
@@ -63,8 +65,8 @@ class HeadTitleViewlet(grok.Viewlet):
         return items
 
 
-class SantaInquiriesViewletManager(OrderedViewletManager, grok.ViewletManager):
-    """Viewlet manager to Inquiries Folder."""
+class SantaFolderViewletManager(OrderedViewletManager, grok.ViewletManager):
+    """Viewlet manager to Folder."""
     grok.context(IATFolder)
     grok.layer(ISantaTemplatesLayer)
     grok.name('santa.folder.manager')
@@ -142,6 +144,9 @@ class FeedViewlet(BaseViewlet):
 
     oid = ''
 
+    def has_date(self):
+        return True
+
     def parent_path(self):
         portal_state = getMultiAdapter(
             (self.context, self.request),
@@ -167,6 +172,18 @@ class FeedViewlet(BaseViewlet):
         brains = catalog(query)
         if brains:
             return brains[0]
+
+    def title(self):
+        parent = self.parent()
+        return parent and parent.Title
+
+    def description(self):
+        parent = self.parent()
+        return parent and parent.Description
+
+    def url(self):
+        parent = self.parent()
+        return parent and parent.getURL()
 
     def _brains(
         self,
@@ -260,13 +277,36 @@ class NewsViewlet(FeedViewlet):
         return self._items(brains)
 
 
-class EventsViewlet(FeedViewlet):
-    grok.name('santa.viewlet.events')
+class ComingEventsViewlet(FeedViewlet):
+    grok.name('santa.viewlet.comingevents')
     oid = 'events'
 
+    def title(self):
+        return _(u'Coming Events')
+
     def items(self):
-        brains = self._brains(interface=IATEvent, sort_on='start')
+        brains = [
+            brain for brain in self._brains(
+                interface=IATEvent, sort_on='start'
+            ) if brain.start > DateTime()
+        ]
         return self._items(brains[-1:])
+
+
+class LatestEventsViewlet(FeedViewlet):
+    grok.name('santa.viewlet.latestevents')
+    oid = 'events'
+
+    def title(self):
+        return _(u'Latest Events')
+
+    def items(self):
+        brains = [
+            brain for brain in self._brains(
+                interface=IATEvent, sort_on='start'
+            ) if brain.start < DateTime()
+        ]
+        return self._items(brains[:1])
 
 
 class PartnersViewlet(FeedViewlet):
@@ -296,26 +336,46 @@ class CasesViewlet(FeedViewlet):
 
 class FolderViewlet(FeedViewlet):
     grok.name('santa.viewlet.folder')
-    grok.viewletmanager(SantaInquiriesViewletManager)
+    grok.viewletmanager(SantaFolderViewletManager)
 
     def parent_path(self):
-        self.oid = self.context.id
+        oid = self.context.id
+        if oid == 'cases':
+            oid = 'partners'
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         portal = portal_state.portal()
         return '{0}/{1}'.format(
             '/'.join(portal.getPhysicalPath()),
-            self.oid,
+            oid,
         )
 
-    def items(self):
-        if self.oid == 'inquiries':
-            return self._items(interface=IPloneFormGenForm, sort_on=None, limit=None)
-        if self.oid == 'news':
-            return self._items(interface=IATNewsItem, limit=5)
-        if self.oid == 'events':
-            portal_state = getMultiAdapter(
-                (self.context, self.request),
-                name=u'plone_portal_state'
+    def _path(self):
+        oid = self.context.id
+        if oid == 'cases':
+            portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+            portal = portal_state.portal()
+            return '{0}/cases'.format(
+                '/'.join(portal.getPhysicalPath()),
             )
-            path = '/'.join(portal_state.portal().getPhysicalPath())
-            return self._items(interface=IATEvent, limit=5, path=path, depth=None, sort_on='start')
+        else:
+            return super(FolderViewlet, self)._path()
+
+    def has_date(self):
+        oid = self.context.id
+        if oid != 'inquiries':
+            return True
+
+    def items(self):
+        oid = self.context.id
+        limit = 5
+        if oid == 'news':
+            brains = self._brains(interface=IATNewsItem, limit=limit)
+        if oid == 'events':
+            brains = self._brains(interface=IATEvent, sort_on='start', limit=limit)
+        if oid == 'partners':
+            brains = self._brains(interface=IPartner, limit=limit)
+        if oid == 'cases':
+            brains = self._brains(interface=IATImage, path=self.parent_path(), depth=None, limit=limit)
+        if oid == 'inquiries':
+            brains = self._brains(interface=IPloneFormGenForm, sort_on=None, limit=None)
+        return self._items(brains)
