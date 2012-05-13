@@ -5,7 +5,11 @@
   >
   <h1>
     <a
-      tal:attributes="href item/portal_url"
+      tal:attributes="
+        href item/portal_url;
+        title item/title;
+        alt item/description;
+      "
       tal:content="item/title"
       />
     </h1>

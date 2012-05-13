@@ -49,6 +49,7 @@ def setUp(self):
             language='',
         )
     ]
+    foundation.setLayout('santa-view')
     foundation.reindexObject()
     en = foundation[
         foundation.invokeFactory(

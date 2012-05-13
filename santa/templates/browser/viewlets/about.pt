@@ -25,8 +25,9 @@
           title item/title;
           alt item/description;
         "
+        i18n:translate=""
         >
-        Read More
+        Read more
       </a>
     </li>
   </ul>

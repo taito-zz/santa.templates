@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-08-17 06:33+0000\n"
+"POT-Creation-Date: 2012-05-13 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,3 +13,16 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: santa.templates\n"
+
+#: ./browser/viewlet.py:297
+msgid "Coming Events"
+msgstr ""
+
+#: ./browser/viewlet.py:313
+msgid "Latest Events"
+msgstr ""
+
+#: ./browser/viewlets/feed.pt:47
+msgid "Read more"
+msgstr ""
+

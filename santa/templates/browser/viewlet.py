@@ -410,15 +410,18 @@ class FolderViewlet(FeedViewlet):
         languages = getToolByName(self.context, 'portal_languages')
         oids = languages.supported_langs
         query = {
-            'id': oids,
             'path': {
                 'query': '/'.join(self.context.getPhysicalPath()),
                 'depth': 1,
             },
+            'object_provides': IATDocument.__identifier__,
         }
         brains = catalog(query)
         if brains:
-            return brains[0]
+            brain = brains[0]
+            bid = brain.id
+            if bid in oids:
+                return brain
 
     def title(self):
         doc = self._document()

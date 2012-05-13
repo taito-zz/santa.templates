@@ -9,7 +9,7 @@ Go to portal_url::
     >>> print browser.bycss('#head-title')
     --- 1 ---
     <section id="head-title"><h1>
-    <a href="http://nohost/plone">Santa Claus Foundation</a>
+    <a alt="Save the world for kids" href="http://nohost/plone" title="Santa Claus Foundation">Santa Claus Foundation</a>
     </h1>
     <h2>Save the world for kids</h2>
     </section>
@@ -27,9 +27,7 @@ Go to santa-view::
     <a alt="Description of Form02." href="http://nohost/plone/inquiries/form02" title="Form02">Form02</a>
     </li>
     <li>
-    <a alt="Save the world for kids" href="http://nohost/plone/foundation" title="Santa Claus Foundation">
-    Read More
-    </a>
+    <a alt="Save the world for kids" href="http://nohost/plone/foundation" title="Santa Claus Foundation">Read more</a>
     </li>
     </ul></section>
 
@@ -43,7 +41,7 @@ Go to santa-view::
     </h1>
     <h2>...</h2>
     <p>Description of News02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/news/news02">Read more</a>
     </p>
     </article></section>
@@ -56,7 +54,7 @@ Go to santa-view::
     </h1>
     <h2>...</h2>
     <p>Description of Event03.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event03">Read more</a>
     </p>
     </article></section>
@@ -69,7 +67,7 @@ Go to santa-view::
     </h1>
     <h2>...</h2>
     <p>Description of Event02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event02">Read more</a>
     </p>
     </article></section>
@@ -82,7 +80,7 @@ Go to santa-view::
     </h1>
     <h2>...</h2>
     <p>Description of Partner02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner02">Read more</a>
     </p>
     </article></section>
@@ -95,7 +93,7 @@ Go to santa-view::
     </h1>
     <h2>...</h2>
     <p>Description of Imager02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner01/image02">Read more</a>
     </p>
     </article></section>
@@ -113,7 +111,7 @@ Go to News Folder::
     </h1>
     <h2>...</h2>
     <p>Description of News02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/news/news02">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of News01." title="News01"><h1>
@@ -121,7 +119,7 @@ Go to News Folder::
     </h1>
     <h2>...</h2>
     <p>Description of News01.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/news/news01">Read more</a>
     </p>
     </article></section></section>
@@ -143,7 +141,7 @@ Go to Events Folder::
     </span>
     </h2>
     <p>Description of Event04.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event04">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event03." title="Event03"><h1>
@@ -155,7 +153,7 @@ Go to Events Folder::
     </span>
     </h2>
     <p>Description of Event03.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event03">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event02." title="Event02"><h1>
@@ -167,7 +165,7 @@ Go to Events Folder::
     </span>
     </h2>
     <p>Description of Event02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event02">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event01." title="Event01"><h1>
@@ -179,7 +177,7 @@ Go to Events Folder::
     </span>
     </h2>
     <p>Description of Event01.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/events/event01">Read more</a>
     </p>
     </article></section></section>
@@ -201,7 +199,7 @@ Go to Partners Folder::
     </span>
     </h2>
     <p>Description of Partner02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner02">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner01." title="Partner01"><h1>
@@ -213,7 +211,7 @@ Go to Partners Folder::
     </span>
     </h2>
     <p>Description of Partner01.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner01">Read more</a>
     </p>
     </article></section></section>
@@ -235,7 +233,7 @@ Go to Cases Folder::
     </span>
     </h2>
     <p>Description of Imager02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner01/image02">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager01." title="Image01"><h1>
@@ -247,7 +245,7 @@ Go to Cases Folder::
     </span>
     </h2>
     <p>Description of Imager01.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/partners/partner01/image01">Read more</a>
     </p>
     </article></section></section>
@@ -265,14 +263,14 @@ Go to Inquiries Folder::
     <a alt="Description of Form01." href="http://nohost/plone/inquiries/form01" title="Form01">Form01</a>
     </h1>
     <p>Description of Form01.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/inquiries/form01">Read more</a>
     </p>
     </article><article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Form02." title="Form02"><h1>
     <a alt="Description of Form02." href="http://nohost/plone/inquiries/form02" title="Form02">Form02</a>
     </h1>
     <p>Description of Form02.</p>
-    <p>
+    <p class="read-more">
     <a href="http://nohost/plone/inquiries/form02">Read more</a>
     </p>
     </article></section></section>
@@ -280,5 +278,11 @@ Go to Inquiries Folder::
 Go to Foundation Folder::
 
     >>> browser.open('/foundation')
-
-    >>> browser.openBrowser()
+    >>> print browser.bycss('#santa-folder')
+    --- 1 ---
+    <section id="santa-folder"><section class="santa-feed"><h1>
+    <a alt="Save the world for kids" href="http://nohost/plone/foundation" title="Santa Claus Foundation">Santa Claus Foundation</a>
+    </h1>
+    Save the world for kids
+    <p>Text of SCF.</p>
+    </section></section>

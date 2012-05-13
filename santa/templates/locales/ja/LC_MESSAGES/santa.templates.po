@@ -9,20 +9,20 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: sv\n"
-"Language-Name: Swedish\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: santa.templates\n"
+"Domain: DOMAIN\n"
 
 #: ./browser/viewlet.py:297
 msgid "Coming Events"
-msgstr ""
+msgstr "今後のイベント"
 
 #: ./browser/viewlet.py:313
 msgid "Latest Events"
-msgstr ""
+msgstr "過去のイベント"
 
 #: ./browser/viewlets/feed.pt:47
 msgid "Read more"
-msgstr ""
+msgstr "更に読む"
 
