@@ -1,5 +1,6 @@
 <section
   i18n:domain="santa.templates"
+  tal:attributes="class string:santa-feed ${viewlet/id}"
   class="santa-feed"
   >
   <tal:block tal:condition="viewlet/show_docs">
@@ -19,7 +20,9 @@
       />
     <div tal:replace="structure viewlet/text" />
   </tal:block>
-  <article tal:repeat="item viewlet/items">
+  <article
+    tal:repeat="item viewlet/items"
+    >
     <img tal:replace="structure item/image" />
     <h1>
       <a

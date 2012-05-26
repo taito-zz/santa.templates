@@ -176,6 +176,10 @@ class FeedViewlet(BaseViewlet):
         if brains:
             return brains[0]
 
+    def id(self):
+        parent = self.parent()
+        return parent and parent.id
+
     def title(self):
         parent = self.parent()
         return parent and parent.Title
