@@ -33,7 +33,7 @@ Go to santa-view::
 
     >>> print browser.bycss('.santa-feed')
     --- 1 ---
-    <section class="santa-feed"><h1>
+    <section class="santa-feed news"><h1>
     <a alt="" href="http://nohost/plone/news" title="News">News</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of News02." title="News02"><h1>
@@ -46,7 +46,7 @@ Go to santa-view::
     </p>
     </article></section>
     --- 2 ---
-    <section class="santa-feed"><h1>
+    <section class="santa-feed events"><h1>
     <a alt="" href="http://nohost/plone/events" title="Coming Events">Coming Events</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event03." title="Event03"><h1>
@@ -59,7 +59,7 @@ Go to santa-view::
     </p>
     </article></section>
     --- 3 ---
-    <section class="santa-feed"><h1>
+    <section class="santa-feed events"><h1>
     <a alt="" href="http://nohost/plone/events" title="Latest Events">Latest Events</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event02." title="Event02"><h1>
@@ -72,7 +72,7 @@ Go to santa-view::
     </p>
     </article></section>
     --- 4 ---
-    <section class="santa-feed"><h1>
+    <section class="santa-feed partners"><h1>
     <a alt="" href="http://nohost/plone/partners" title="Partners">Partners</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner02." title="Partner02"><h1>
@@ -85,7 +85,7 @@ Go to santa-view::
     </p>
     </article></section>
     --- 5 ---
-    <section class="santa-feed"><h1>
+    <section class="santa-feed cases"><h1>
     <a alt="" href="http://nohost/plone/cases" title="Cases">Cases</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager02." title="Image02"><h1>
@@ -103,7 +103,7 @@ Go to News Folder::
     >>> browser.open('/news')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed news"><h1>
     <a alt="" href="http://nohost/plone/news" title="News">News</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of News02." title="News02"><h1>
@@ -129,7 +129,7 @@ Go to Events Folder::
     >>> browser.open('/events')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed events"><h1>
     <a alt="" href="http://nohost/plone/events" title="Events">Events</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Event04." title="Event04"><h1>
@@ -187,7 +187,7 @@ Go to Partners Folder::
     >>> browser.open('/partners')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed partners"><h1>
     <a alt="" href="http://nohost/plone/partners" title="Partners">Partners</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Partner02." title="Partner02"><h1>
@@ -221,7 +221,7 @@ Go to Cases Folder::
     >>> browser.open('/cases')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed cases"><h1>
     <a alt="" href="http://nohost/plone/cases" title="Cases">Cases</a>
     </h1>
     <article><img class="santa-fall-back" src="http://nohost/plone/++resource++santa.templates.images/feed-fallback.png" alt="Description of Imager02." title="Image02"><h1>
@@ -255,7 +255,7 @@ Go to Inquiries Folder::
     >>> browser.open('/inquiries')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed inquiries"><h1>
     <a alt="Description of English Inquiries." href="http://nohost/plone/inquiries" title="English Inquiries">English Inquiries</a>
     </h1>
     <p>Text of English Inquiries.</p>
@@ -280,7 +280,7 @@ Go to Foundation Folder::
     >>> browser.open('/foundation')
     >>> print browser.bycss('#santa-folder')
     --- 1 ---
-    <section id="santa-folder"><section class="santa-feed"><h1>
+    <section id="santa-folder"><section class="santa-feed foundation"><h1>
     <a alt="Save the world for kids" href="http://nohost/plone/foundation" title="Santa Claus Foundation">Santa Claus Foundation</a>
     </h1>
     Save the world for kids

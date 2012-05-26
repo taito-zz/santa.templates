@@ -1,24 +1,10 @@
-from Acquisition import aq_parent
-from DateTime import DateTime
-from OFS.interfaces import IItem
 from Products.ATContentTypes.interfaces.document import IATDocument
-from Products.ATContentTypes.interfaces.event import IATEvent
 from Products.ATContentTypes.interfaces.folder import IATFolder
-from Products.ATContentTypes.interfaces.image import IATImage
-from Products.ATContentTypes.interfaces.news import IATNewsItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
-from Products.PloneFormGen.interfaces import IPloneFormGenForm
 from five import grok
-from plone.app.contentlisting.interfaces import IContentListing
-from plone.app.layout.viewlets.interfaces import IPortalHeader
-from plone.app.viewletmanager.manager import OrderedViewletManager
-from plone.namedfile.file import NamedImage
 from santa.content.partner import IPartner
-from santa.templates import _
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
-from zope.component import getMultiAdapter
 
 
 grok.templatedir('templates')
@@ -41,7 +27,7 @@ class FolderView(grok.View):
 class PartnerView(grok.View):
     grok.context(IPartner)
     grok.layer(ISantaTemplatesLayer)
-    grok.name('santa-view')
+    grok.name('view')
     grok.template('partner-view')
 
     def _document(self):
