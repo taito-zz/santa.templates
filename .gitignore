@@ -1,4 +1,3 @@
-santa/templates/docs/_build/*
 *.egg-info
 *.mo
 *.pyc
