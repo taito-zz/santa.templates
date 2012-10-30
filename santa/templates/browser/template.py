@@ -1,20 +1,12 @@
 from Products.ATContentTypes.interfaces.document import IATDocument
 from Products.ATContentTypes.interfaces.folder import IATFolder
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from five import grok
 from santa.content.partner import IPartner
 from santa.templates.browser.interfaces import ISantaTemplatesLayer
 
 
 grok.templatedir('templates')
-
-
-class TopView(grok.View):
-    grok.context(IPloneSiteRoot)
-    grok.layer(ISantaTemplatesLayer)
-    grok.name('santa-view')
-    grok.template('top-view')
 
 
 class FolderView(grok.View):

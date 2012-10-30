@@ -36,31 +36,12 @@ class TestCase(IntegrationTestCase):
             u'1'
         )
 
-    def test_types__Plone_Site__immediate_view(self):
-        portal_types = getToolByName(self.portal, 'portal_types')
-        type_info = portal_types.getTypeInfo('Plone Site')
-        self.assertEqual(type_info.getProperty('immediate_view'), 'santa-view')
-
-    def test_types__Plone_Site__default_view(self):
-        portal_types = getToolByName(self.portal, 'portal_types')
-        type_info = portal_types.getTypeInfo('Plone Site')
-        self.assertEqual(type_info.getProperty('default_view'), 'santa-view')
-
-    def test_types__Plone_Site__view_methods(self):
-        portal_types = getToolByName(self.portal, 'portal_types')
-        type_info = portal_types.getTypeInfo('Plone Site')
-        self.assertEqual(type_info.getProperty('view_methods'), ('santa-view',))
-
-    def test_portal__layout(self):
-        self.assertEqual(self.portal.getLayout(), 'santa-view')
-
     def test__cli_properties(self):
         portal_properties = getToolByName(self.portal, 'portal_properties')
         cli_properties = getattr(portal_properties, 'cli_properties')
         self.assertEqual(
             cli_properties.getProperty('allowed_types'),
-            ('Event', 'FormFolder')
-        )
+            ('Event', 'FormFolder'))
 
     def test_viewlets__santa_top_manager(self):
         from zope.component import getUtility
@@ -75,8 +56,7 @@ class TestCase(IntegrationTestCase):
                 u'santa.viewlet.latestevents',
                 u'santa.viewlet.partners',
                 u'santa.viewlet.cases',
-            )
-        )
+            ))
 
     def test_viewlets__santa_folder_manager(self):
         from zope.component import getUtility
