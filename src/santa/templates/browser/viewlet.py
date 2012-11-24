@@ -11,6 +11,8 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.PloneFormGen.interfaces import IPloneFormGenForm
 from five import grok
 from plone.app.contentlisting.interfaces import IContentListing
+from plone.app.layout.viewlets.interfaces import IBelowContent
+from plone.app.layout.viewlets.interfaces import IBelowContentBody
 from plone.app.layout.viewlets.interfaces import IPortalHeader
 from plone.app.viewletmanager.manager import OrderedViewletManager
 from plone.namedfile.file import NamedImage
@@ -443,3 +445,17 @@ class FolderViewlet(FeedViewlet):
         if doc:
             obj = doc.getObject()
             return obj.getField('text').get(obj)
+
+
+class EventListingViewlet(BaseViewlet):
+    """Viewlet to show event listing."""
+    grok.context(IPloneSiteRoot)
+    grok.name('santa.templates.event.listing')
+    grok.template('event-listing')
+    grok.viewletmanager(IBelowContentBody)
+
+    def events(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        query = {
+            'object_provides': IATEvent.__identifier__,
+        }

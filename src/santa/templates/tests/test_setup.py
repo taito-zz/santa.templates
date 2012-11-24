@@ -1,5 +1,5 @@
-from santa.templates.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
+from santa.templates.tests.base import IntegrationTestCase
 
 
 class TestCase(IntegrationTestCase):
@@ -33,8 +33,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-santa.templates:default'),
-            u'1'
-        )
+            u'1')
 
     def test__cli_properties(self):
         portal_properties = getToolByName(self.portal, 'portal_properties')

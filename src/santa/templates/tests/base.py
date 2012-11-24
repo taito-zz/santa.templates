@@ -4,7 +4,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 
-import unittest2 as unittest
+import unittest
 
 
 class SantaTemplatesLayer(PloneSandboxLayer):
@@ -19,7 +19,6 @@ class SantaTemplatesLayer(PloneSandboxLayer):
         z2.installProduct(app, 'Products.PloneFormGen')
         import santa.templates
         self.loadZCML(package=santa.templates)
-        z2.installProduct(app, 'santa.templates')
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
@@ -29,7 +28,6 @@ class SantaTemplatesLayer(PloneSandboxLayer):
 
     def tearDownZope(self, app):
         """Tear down Zope."""
-        z2.uninstallProduct(app, 'santa.templates')
         z2.uninstallProduct(app, 'Products.PloneFormGen')
 
 
